@@ -1,31 +1,32 @@
-const detect = require('language-detect');
+const franc = require("franc");
 
-/**
- * detectLanguage(text) -> returns simple code: 'en', 'hi', 'mr', 'gu'
- * language-detect returns long names like 'english' so we normalize.
- */
+// Detect language code (mar, guj, hin, eng, etc.)
 function detectLanguage(text) {
-  try {
-    const lang = detect(text); // may return 'english', 'hindi', 'marathi', 'gujarati'
-    if (!lang) return 'en';
-    const l = lang.toLowerCase();
-    if (l.includes('hindi')) return 'hi';
-    if (l.includes('marathi')) return 'mr';
-    if (l.includes('gujarati')) return 'gu';
-    if (l.includes('english')) return 'en';
-    return 'en';
-  } catch (err) {
-    return 'en';
+  const langCode = franc(text || "");
+
+  switch (langCode) {
+    case "mar": // Marathi
+      return "marathi";
+    case "guj": // Gujarati
+      return "gujarati";
+    case "hin": // Hindi
+      return "hindi";
+    case "eng": // English
+      return "english";
+    default:
+      return "unknown";
   }
 }
 
-/** Normalize codes to supported languages */
+// (Optional) Normalizer if you want consistent codes
 function normalizeLangCode(code) {
-  const c = (code || 'en').toLowerCase();
-  if (['hi','hin','hindi'].includes(c)) return 'hi';
-  if (['mr','mar','marathi'].includes(c)) return 'mr';
-  if (['gu','guj','gujarati'].includes(c)) return 'gu';
-  return 'en';
+  const map = {
+    mar: "marathi",
+    guj: "gujarati",
+    hin: "hindi",
+    eng: "english",
+  };
+  return map[code] || "unknown";
 }
 
 module.exports = { detectLanguage, normalizeLangCode };
