@@ -1,22 +1,9 @@
 {
   "version": 2,
   "builds": [
-    { "src": "package.json", "use": "@vercel/node" }
+    { "src": "server.js", "use": "@vercel/node" }
   ],
   "routes": [
-    { "src": "/api/messages", "dest": "/server.js", "methods": ["POST"] },
-    { "src": "/webhook", "dest": "/server.js", "methods": ["GET", "POST"] },
-    { "src": "/health", "dest": "/server.js", "methods": ["GET"] },
-    { "src": "/(.*)", "dest": "/server.js" }
-  ],
-  "env": {
-    "GEMINI_API_KEY": "@gemini_api_key",
-    "WHATSAPP_BUSINESS_ACCOUNT_ID": "@whatsapp_business_account_id",
-    "WHATSAPP_ACCESS_TOKEN": "@whatsapp_access_token",
-    "WHATSAPP_PHONE_NUMBER_ID": "@whatsapp_phone_number_id",
-    "WHATSAPP_VERIFY_TOKEN": "@whatsapp_verify_token",
-    "SHOPIFY_STORE_DOMAIN": "@shopify_store_domain",
-    "SHOPIFY_ACCESS_TOKEN": "@shopify_access_token",
-    "NODE_ENV": "production"
-  }
+    { "src": "/(.*)", "dest": "server.js" }
+  ]
 }
