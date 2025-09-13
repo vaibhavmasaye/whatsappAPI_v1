@@ -53,17 +53,14 @@ router.post('/test-gemini', async (req, res, next) => {
         console.log('Received test-gemini request:', JSON.stringify(req.body));
 
         // ✅ Correct destructuring
-        const { message } = req.body;
+        const { message , userId} = req.body;
         if (!message) {
             return res.status(400).json({ error: 'Message is required' });
         }
 
-        // Send to Gemini
-        console.log('Sending message to Gemini:', message);
         const prompt = `Convert the following user request into a safe SQL query: "${message}"`;
-        console.log('Generated prompt for Gemini:', prompt);
 
-        const sqlQuery = await geminiService.generateSQL(prompt);
+        const sqlQuery = await geminiService.generateSQL(prompt ,userId);
 
         res.json({ success: true, sql: sqlQuery });
     } catch (error) {
